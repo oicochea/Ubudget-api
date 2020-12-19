@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
 
   # GET /expenses
   def index
-    @expenses = Expense.all
+    @expenses = Expense.where user: @user.id
 
     render json: @expenses
   end
@@ -17,6 +17,7 @@ class ExpensesController < ApplicationController
   # POST /expenses
   def create
     @expense = Expense.new(expense_params)
+    @expense.user = @user
 
     if @expense.save
       render json: @expense, status: :created, location: @expense
